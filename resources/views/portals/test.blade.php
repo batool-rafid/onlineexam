@@ -1,10 +1,11 @@
-<div class="form-group row">
-                            <label for="material" class="col-md-4 col-form-label text-md-right">{{ __('material') }}</label>
+
+                        <div class="form-group row">
+                            <label for="questions" class="col-md-4 col-form-label text-md-right">{{ __('questions') }}</label>
 
                             <div class="col-md-6">
-                                <input id="material" type="text" class="form-control @error('material') is-invalid @enderror" material="material" value="{{ old('material') }}" required autocomplete="material" autofocus>
+                                <input id="questions" name="questions" type="text" class="form-control @error('questions') is-invalid @enderror" questions="questions" value="{{ old('questions') }}" required autocomplete="questions" autofocus>
 
-                                @error('material')
+                                @error('questions')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

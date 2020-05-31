@@ -26,7 +26,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/student','StudentController');
     Route::resource('/lecturer','LecturerController');
     Route::resource('/admin','AdminController');
+    Route::resource('/question','QuestionController');
     Route::resource('/student-exam','StudentExamController');
+    //Route::get('questions/create/{dd}','QuestionController@create')->name('questions.create');
 
     Route::get('/st/myexams','ExamController@studentexams')->name('exam.studentexams');
 });

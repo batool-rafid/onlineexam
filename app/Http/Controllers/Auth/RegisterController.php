@@ -70,7 +70,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role_id'=> $data['role'] == 'Lecture' ? 2 : 3
+            'role_id'=> $data['role'] == 'Lecturer' ? 2 : 3
         ]);
         if($data['role'] == 'Student'){
             Student::create([

@@ -49,17 +49,24 @@ class ExamController extends Controller
             'name' => ['string' , 'max:191' , 'required'],
             'discription' => ['string' ],
             'material' => ['string' , 'max:191' , 'required'],
+            'questionsnum' => ['integer' , 'required'],
         ]);
+
         $exam = Exam::create([
             'user_id' =>Auth::user()->id,
             'name' => $data['name'],
             'discription' => $data['discription'],
             'stage' => $data['stage'],
-            'material' => $data['material']
+            'material' => $data['material'],
+            'questionsnum' => $data['questionsnum'],
 
         ]);
-
-        return redirect(route('exam.create'))->with('msg','Exam Created Successfully');
+            
+        return view('portals.lecturer.add-questions')->with(
+            [
+            'msg' => 'Exam Created Successfully',
+            'exam' => $exam  
+        ]);
     }
 
     /**

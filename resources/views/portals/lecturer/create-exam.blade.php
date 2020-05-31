@@ -17,7 +17,7 @@
                         @endif
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Exam Name') }}</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -31,7 +31,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="discription" class="col-md-4 col-form-label text-md-right">{{ __('discription') }}</label>
+                            <label for="discription" class="col-md-4 col-form-label text-md-right">{{ __('Discription') }}</label>
 
                             <div class="col-md-6">
                                 <textarea name="discription" class="form-control @error('discription') is-invalid @enderror" cols="30" rows="10" value="{{ old('discription') }}" autocomplete="discription" autofocus></textarea>
@@ -58,12 +58,26 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="material" class="col-md-4 col-form-label text-md-right">{{ __('material') }}</label>
+                            <label for="material" class="col-md-4 col-form-label text-md-right">{{ __('Material Name') }}</label>
 
                             <div class="col-md-6">
                                 <input id="material" name="material" type="text" class="form-control @error('material') is-invalid @enderror" material="material" value="{{ old('material') }}" required autocomplete="material" autofocus>
 
                                 @error('material')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="questionsnum" class="col-md-4 col-form-label text-md-right">{{ __('questionsnum') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="questionsnum" name="questionsnum" type="text" class="form-control @error('questionsnum') is-invalid @enderror" value="{{ old('questionsnum') }}" required autocomplete="questionsnum" autofocus>
+
+                                @error('questionsnum')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

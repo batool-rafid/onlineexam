@@ -24,7 +24,7 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        //
+ 
     }
 
     /**
@@ -35,7 +35,36 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $exam_len = $data['exam_len'] ; 
+        $exam_id = $data['exam_id'] ;
+        for( $i = 1 ; $i <= $exam_len ; $i++){
+            $this->validate($request,[
+            
+                'q_'.$i => [ 'required'],
+                'qch_'.$i.'_1' => ['string', 'required', 'max:190' ],
+                'qch_'.$i.'_2' => ['string', 'required', 'max:190' ],
+                'qch_'.$i.'_3' => ['string', 'required', 'max:190' ],
+                'qch_'.$i.'_4' => ['string', 'required', 'max:190' ],
+
+            ]);
+    
+        }
+        for( $i = 1 ; $i <= $exam_len ; $i++){
+            $question = Question::create([
+                'exam_id' =>$exam_id,
+                'question' => $data['q_'.$i],
+                'choice_1' => $data['qch_'.$i.'_1'],
+                'choice_2' => $data['qch_'.$i.'_2'],
+                'choice_3' => $data['qch_'.$i.'_3'],
+                'choice_4' => $data['qch_'.$i.'_4'],
+                'correct' => $data['correct_'.$i],
+    
+            ]);
+        }
+    
+            
+        return redirect(route('lecturer.index'));
     }
 
     /**

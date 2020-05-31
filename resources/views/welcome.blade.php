@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Online Examination System | Graduation project
+                    Online Examination System
                 </div>
             </div>
         </div>
