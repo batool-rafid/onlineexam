@@ -21,9 +21,17 @@ class ExamController extends Controller
         
     }
 
-    public function studentexams(){
+    public function showexams(){
+        if(Auth::user()->role->name == 'Student'){
         $exams = Exam::where('stage', Auth::user()->student->stage)->orderBy('created_at','desc')->paginate(5);
-        return view('portals.student.st-exams')->with('exams',$exams);
+        return view('exam.show-exams')->with('exams',$exams);}
+        
+        elseif (Auth::user()->role->name == 'Lecturer'){
+            
+        $exams = Exam::where('user_id', Auth::user()->id)->orderBy('created_at','desc')->paginate(5);
+        return view('exam.show-exams')->with('exams',$exams);
+
+        }
     }
 
     /**
@@ -77,7 +85,7 @@ class ExamController extends Controller
      */
     public function show(Exam $exam)
     {
-        //
+        //TODO
     }
 
     /**
@@ -88,7 +96,8 @@ class ExamController extends Controller
      */
     public function edit(Exam $exam)
     {
-        //
+        $exam = Exam::find($exam->id);
+        return view('exam.edit-exam')->with('exam',$exam);
     }
 
     /**
@@ -100,7 +109,10 @@ class ExamController extends Controller
      */
     public function update(Request $request, Exam $exam)
     {
-        //
+    
+          Exam::find($exam->id)->update($request->all());
+          $exam = Exam::find($exam->id);
+         return view('exam.edit-exam')->with('exam',$exam);
     }
 
     /**
@@ -111,6 +123,14 @@ class ExamController extends Controller
      */
     public function destroy(Exam $exam)
     {
-        //
+        $questions = Exam::find($exam->id)->questions;
+        foreach($questions as $question){
+            if(is_null($question->answers)){
+                $question->destroy($question->id);
+            }
+        }
+        $exam = Exam::find($exam->id);
+        $exam->destroy($exam->id);
+        return redirect(route('exam.showexams'))->with('msg','Deleted');
     }
 }

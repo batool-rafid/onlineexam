@@ -26,11 +26,15 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/student','StudentController');
     Route::resource('/lecturer','LecturerController');
     Route::resource('/admin','AdminController');
+
+    Route::get('/question/create/{id}','QuestionController@create_question')->name('question.create_question');
+    Route::post('/questio/store','QuestionController@store_question')->name('question.store_question');
     Route::resource('/question','QuestionController');
     Route::resource('/student-exam','StudentExamController');
     //Route::get('questions/create/{dd}','QuestionController@create')->name('questions.create');
 
-    Route::get('/st/myexams','ExamController@studentexams')->name('exam.studentexams');
+    Route::get('/st/myexams','ExamController@showexams')->name('exam.showexams');
+    Route::get('/lc/examquestions/{exam}','QuestionController@showquestions')->name('question.showquestions');
 });
 
 
