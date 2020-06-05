@@ -30,11 +30,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/question/create/{id}','QuestionController@create_question')->name('question.create_question');
     Route::post('/questio/store','QuestionController@store_question')->name('question.store_question');
     Route::resource('/question','QuestionController');
-    Route::resource('/student-exam','StudentExamController');
+    Route::resource('exam.student-exam','StudentExamController')->shallow();
     //Route::get('questions/create/{dd}','QuestionController@create')->name('questions.create');
-
+    Route::get('/exam/results/{exam}','StudentExamController@show_results')->name('studentexam.show-results');
+    Route::get('/st/exam/answers/{stexam}','AnswerController@show_answers')->name('answer.show-answers');
     Route::get('/st/myexams','ExamController@showexams')->name('exam.showexams');
     Route::get('/lc/examquestions/{exam}','QuestionController@showquestions')->name('question.showquestions');
+   
 });
 
 

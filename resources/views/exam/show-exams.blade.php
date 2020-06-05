@@ -24,7 +24,11 @@
                         @if(auth::user()->role->name == 'Lecturer')
                         <th scope="col">Stage</th>  
                         @endif
+                        <th scope="col">Q/N</th> 
                         <th scope="col">Status</th> 
+                        @if(auth::user()->role->name == 'Student')
+                        <th>Score</th>
+                        @endif
                         <th scope="col">Created At</th>  
                         <th scope="col">Actions</th>
                         </tr>
@@ -40,13 +44,27 @@
                         <td>{{$exam->discription}}</td>
                         @if(auth::user()->role->name == 'Lecturer')
                         <td>{{$exam->stage}}</td>
+                        
                         @endif
+                        <td>{{$exam->questionsnum}}</td>
                         <td>{{$exam->status}}</td>
+                        @if(auth::user()->role->name == 'Student')
+                        <?php $score =auth::user()->examScore($exam->id); ?>
+                        <td>
+                        {{$score}}
+                
+                        </td>
+
+
+
+
+
+                        @endif
                         <td>{{$exam->created_at}}</td>
                         <td>
                         <div style="width: 250px;">
                         @if(auth::user()->role->name == 'Student' && $exam->status == 'Waiting')
-                        <a href="{{route('exam.show',$exam->id)}}" class="btn btn-primary" style="margin-left: 20px">Start</a>
+                        <a href="{{route('exam.student-exam.create',$exam)}}" class="btn btn-primary" style="margin-left: 20px">Start</a>
                         @endif
                         @if(auth::user()->role->name == 'Lecturer')
                         <a href="{{route('question.showquestions',$exam)}}" class="btn btn-primary" style="margin-left: 20px">View</a>
@@ -59,9 +77,8 @@
                             <button class="btn btn-danger">Delete</button>
                         </form>
                         </div>
-                        
-                
-
+                        @else
+                        <a href="{{route('studentexam.show-results',$exam)}}" class="btn btn-primary" style="margin-left: 20px">Results</a>
                         @endif
                         @endif    
                         </div>

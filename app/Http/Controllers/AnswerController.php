@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Answer;
+use App\StudentExam;
+
 use Illuminate\Http\Request;
 
 class AnswerController extends Controller
@@ -16,6 +18,13 @@ class AnswerController extends Controller
     {
         //
     }
+
+    public function show_answers(StudentExam $stexam)
+    {
+        $answers  = Answer::where('student_exam_id',$stexam->id)->get();
+        return view('answer.show-answer')->with('answers',$answers);
+    }
+
 
     /**
      * Show the form for creating a new resource.

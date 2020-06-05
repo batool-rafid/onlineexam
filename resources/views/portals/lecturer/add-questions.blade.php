@@ -19,13 +19,13 @@
                         @endif
                         <?php $i= 1; ?> 
                         @for($e=1; $e<= $exam->questionsnum ; $e++)
-                        
+
                         <div class="form-group row">
                             <label for=<?php echo "q_".$i ?> class="col-md-2 col-form-label text-md-right"><b>Question {{$i}}</b></label>
 
                             <div class="col-md-8">
                                 <textarea name=<?php echo "q_".$i ?> class="form-control " cols="35" rows="4" value="{{ old(<?php echo "q_".$i ?>) }}"  autofocus></textarea>
-                               
+
                             </div>
                         </div>
                         <?php $c= 1; ?> 
@@ -35,7 +35,7 @@
 
                             <div class="col-md-8">
                                 <textarea name=<?php echo "qch_".$i."_".$c ?>  class="form-control " cols="35" rows="2" value="{{ old(<?php echo "qch_".$i."_".$c ?> ) }}" autofocus></textarea>
-                              
+
                             </div>
                         </div>
                         <?php $c++; ?> 
@@ -59,12 +59,12 @@
                         </div>
                         @endfor
 
-                   
-        
 
 
-            
-                    
+
+
+
+
                         <div class="form-group row mb-0">
                             <div class="col-md-2 offset-md-2">
                                 <button type="submit" class="btn btn-primary">
@@ -78,4 +78,4 @@
         </div>
     </div>
 </div>
-@endsection
+@endsection 

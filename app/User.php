@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
+
 
 class User extends Authenticatable
 {
@@ -49,8 +51,19 @@ class User extends Authenticatable
     }
     //exams taken by students
     public function exams_taken_by_student(){
-        return $this->belongsToMany('App\Exam', 'student_exams')->withPivot('score');
+        return $this->belongsToMany('App\Exam', 'student_exams','user_id','exam_id');
     }
+    public function student_exams(){
+        return $this->hasMany('App\StudentExam');
+    }
+    public function examScore( $exam_id){
+        $stexams = auth::user()->student_exams;
+        foreach($stexams as $stexam){
+            if($stexam->exam_id == $exam_id)
+                return $stexam->score;
+        }
+    }
+    
     
    
 }

@@ -46,7 +46,7 @@
                         <td>{{$question->choice_3}}</td>
                         <td>{{$question->choice_4}}</td>
                         <td>{{$question->correct}}</td>
-                        <td>
+                        <td style="width: 250px;">
                         @if(auth::user()->role->name == 'Lecturer')
                         <a href="{{route('question.show',$question)}}" class="btn btn-primary" style="margin-left: 20px">View</a>
                         @if($exam->status == 'Waiting')
