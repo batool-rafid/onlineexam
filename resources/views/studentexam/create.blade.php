@@ -1,4 +1,70 @@
 @extends('layouts.student')
+<?php $t = time(); ?>
+@section('js')
+<script type="text/javascript">
+var TimeLimit ;
+function cancel_start() {
+
+  var x = document.getElementById("submit");
+  x.style.display = "none" 
+  alert("Sorry your time has finished!");  
+  
+}
+window.onload = function() {
+    countdownto();
+};
+
+
+<?php 
+if (Cookie::has('time'.$exam->id))
+{
+    $t = Cookie::get('time'.$exam->id);
+}
+else
+{   
+     Cookie::queue(Cookie::make('time'.$exam->id,$t)); 
+}
+?>
+
+TimeLimit = new Date('<?php echo date('r', $t + 5) ?>');
+</script>
+<script type="text/javascript">
+var x = 1 ;  var f = 1 ;
+const div = document.createElement('div');
+div.className = 'form-group row';
+function countdownto() {
+  var date = Math.round((TimeLimit-new Date())/1000);
+  var hours = Math.floor(date/3600);
+  date = date - (hours*3600);
+  var mins = Math.floor(date/60);
+  date = date - (mins*60);
+  var secs = date;
+  if (hours<10) hours = hours;
+  if (mins<10) mins = mins;
+  if (secs<10) secs = secs;
+
+if( secs <= 0 && mins <= 0 && hours <= 0 || hours < 0) {
+      f = 0;
+      cancel_start();  
+      div.innerHTML = '00'+':'+'00'+':'+'00' ;    
+}else{
+
+    div.innerHTML = '0'+hours+':'+'0'+mins+':'+'0'+secs ;
+}
+
+if(x){
+document.getElementById('ccc').appendChild(div);
+x = 0 ;
+}
+if(Boolean(f))
+  setTimeout("countdownto()",1000);
+  }
+
+</script>
+
+
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -17,6 +83,17 @@
                                 {{session('msg')}}
                             </div>
                         @endif
+
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label text-md-right"><b>Time Remaining</b></label>
+
+                            <div class="col-md-8" id="ccc">
+                                
+                            </div>
+                        </div>
+                        
+
+
                         <?php $i=1; ?>
                         @foreach($questions as $question)
                         <div class="form-group row">
@@ -82,7 +159,7 @@
                     
                         <div class="form-group row mb-0">
                             <div class="col-md-2 offset-md-2">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" id="submit">
                                     {{ __('Submit') }}
                                 </button>
                             </div>

@@ -63,6 +63,20 @@ class User extends Authenticatable
                 return $stexam->score;
         }
     }
+
+    public function hasRoles($roles){
+        if(is_array($roles)){
+            foreach ($roles as $role) {
+                if ($this->role->name == $role)
+                    return true;
+           }
+        }
+        else
+            if ($this->role->name == $role)
+                return true;
+
+         return false;
+    }
     
     
    
