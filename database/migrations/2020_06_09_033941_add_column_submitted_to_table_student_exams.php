@@ -20,7 +20,7 @@ class AddColumnSubmittedToTableStudentExams extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * Reverse the migrationsdfdfdf.
      *
      * @return void
      */
