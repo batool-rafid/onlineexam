@@ -31,6 +31,8 @@ elseif((strtotime($exam->datetime) + $exam->duration * 60) > time()){
                                 {{session('msg')}}
                             </div>
                         @endif
+                        <div class="table-responsive">
+
                 <table class="table ">
                     <thead class="thead-dark">
                         <tr>
@@ -86,6 +88,7 @@ elseif((strtotime($exam->datetime) + $exam->duration * 60) > time()){
                     </tbody>
                     
                     </table>
+                    </div>
                 </div>
                 
             </div>

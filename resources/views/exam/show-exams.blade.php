@@ -25,7 +25,8 @@ elseif((strtotime($exam->datetime) + $exam->duration * 60) > time()){
                                 {{session('msg')}}
                             </div>
                         @endif
-                <table class="table ">
+                        <div class="table-responsive">
+                        <table class="table ">
                     <thead class="thead-dark">
                         <tr>
                         <th scope="col">#</th>
@@ -110,6 +111,8 @@ elseif((strtotime($exam->datetime) + $exam->duration * 60) > time()){
                     </tbody>
                     
                     </table>
+                        </div>
+                
                     {{$exams->links()}}
                 </div>
                 
