@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 
 
-class User extends Authenticatable
+class User extends Authenticatable 
 {
     use Notifiable;
 
@@ -62,6 +62,27 @@ class User extends Authenticatable
             if($stexam->exam_id == $exam_id)
                 return $stexam->score;
         }
+    }
+    public function examSub( $exam_id){
+        $stexams = auth::user()->student_exams;
+        foreach($stexams as $stexam){
+            if($stexam->exam_id == $exam_id)
+                return $stexam->submitted;
+        }
+    }
+
+    public function hasRoles($roles){
+        if(is_array($roles)){
+            foreach ($roles as $role) {
+                if ($this->role->name == $role)
+                    return true;
+           }
+        }
+        else
+            if ($this->role->name == $role)
+                return true;
+
+         return false;
     }
     
     

@@ -14,12 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 //TODO make a midlleware to the routes acording to roles
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.welcome');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes(['verify' => false]);
 Route::middleware(['auth'])->group(function () {
     
     Route::resource('/exam','ExamController');
@@ -31,17 +32,47 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/questio/store','QuestionController@store_question')->name('question.store_question');
     Route::resource('/question','QuestionController');
     Route::resource('exam.student-exam','StudentExamController')->shallow();
-    //Route::get('questions/create/{dd}','QuestionController@create')->name('questions.create');
-    Route::get('/exam/results/{exam}','StudentExamController@show_results')->name('studentexam.show-results');
-    Route::get('/st/exam/answers/{stexam}','AnswerController@show_answers')->name('answer.show-answers');
+    
+    //Shared
     Route::get('/st/myexams','ExamController@showexams')->name('exam.showexams');
     Route::get('/lc/examquestions/{exam}','QuestionController@showquestions')->name('question.showquestions');
+
+
+
+
+    //Student Routes
+   
+
+
+
+
+   //Lecturer route
+   //Route::get('/st/exam/answers/{stexam}','AnswerController@show_answers')->name('answer.show-answers');
+    Route::get('/st/exam/answers/{stexam}', [
+        'uses' =>'AnswerController@show_answers',
+        'as'=>'answer.show-answers',
+        'middleware'=>'roles',
+        'roles' => ['Lecturer'],
+    ]);
+    //Route::get('/exam/results/{exam}','StudentExamController@show_results')->name('studentexam.show-results');
+    Route::get('/exam/results/{exam}', [
+        'uses' =>'StudentExamController@show_results',
+        'as'=>'studentexam.show-results',
+        'middleware'=>'roles',
+        'roles' => ['Lecturer'],
+    ]);
+    
    
 });
 
 
 /*
-
+Route::get('/st/exam/answers/{stexam}', [
+        'uses' =>'AnswerController@show_answers',
+        'as'=>'answer.show-answers',
+        'middleware'=>'roles',
+        'roles' => ['Lecturer'],
+    ]);
     Route::get('/student/home',function(){
         return view('portals.student.st-home');
     })->name('student.home');
