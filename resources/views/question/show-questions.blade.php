@@ -60,15 +60,15 @@ elseif((strtotime($exam->datetime) + $exam->duration * 60) > time()){
                         <td>{{$question->choice_3}}</td>
                         <td>{{$question->choice_4}}</td>
                         <td>{{$question->correct}}</td>
-                        <td style="width: 190px;">
+                        <td style="width: 250px;">
                         @if(auth::user()->role->name == 'Lecturer')
                         @if(status($exam) == "Waiting")
-                        <a href="{{route('question.edit',$question)}}" class="btn btn-success" style="margin-left: 20px; margin-right: 0px">Edit</a>
-                        <div class="float-right">
+                        <a href="{{route('question.edit',$question)}}" class="btn btn-success" style=" min-width: 70px; max-width: 70px;">Edit</a>
+                        <div class="float-right ">
                         <form action="{{route('question.destroy',$question)}}" method="POST">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
-                            <button class="btn btn-danger">Delete</button>
+                            <button class="btn btn-danger" style=" min-width: 70px; max-width: 70px;">Delete</button>
                         </form>
                         </div>
                         

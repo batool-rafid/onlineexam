@@ -77,27 +77,27 @@ elseif((strtotime($exam->datetime) + $exam->duration * 60) > time()){
                         @endif
                         <td>{{$exam->datetime}}</td>
                         <td>{{$exam->duration}}</td>
-                        <td>
-                        <div style="width: 250px;">
+                        <td style="width: 260px;">
+                       
                         @if(auth::user()->role->name == 'Student' && status($exam) =="In-progress" && $sub != true )
-                        <a href="{{route('exam.student-exam.create',$exam)}}" class="btn btn-primary" style="margin-left: 20px">Enrol</a>
+                        <a href="{{route('exam.student-exam.create',$exam)}}" class="btn btn-primary" style=" min-width: 75px; max-width: 75px;">Enrol</a>
                         @endif
                         @if(auth::user()->role->name == 'Lecturer')
-                        <a href="{{route('question.showquestions',$exam)}}" class="btn btn-primary" style="margin-left: 20px">View</a>
+                        <a href="{{route('question.showquestions',$exam)}}" class="btn btn-primary" style=" min-width: 75px; max-width: 75px;">View</a>
                         @if(status($exam) =="Waiting")
-                        <a href="{{route('exam.edit',$exam)}}" class="btn btn-success" style="margin-left: 20px; margin-right: 0px">Edit</a>
+                        <a href="{{route('exam.edit',$exam)}}" class="btn btn-success" style=" min-width: 75px; max-width: 75px;">Edit</a>
                         <div class="float-right">
                         <form action="{{route('exam.destroy',$exam)}}" method="POST">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
-                            <button class="btn btn-danger">Delete</button>
+                            <button class="btn btn-danger" style=" min-width: 75px; max-width: 75px;">Delete</button>
                         </form>
                         </div>
                         @else
-                        <a href="{{route('studentexam.show-results',$exam)}}" class="btn btn-primary" style="margin-left: 20px">Results</a>
+                        <a href="{{route('studentexam.show-results',$exam)}}" class="btn btn-primary" style=" min-width: 75px; max-width: 75px;">Results</a>
                         @endif
                         @endif    
-                        </div>
+                        
                     
                         </td>
                     </tr> 
