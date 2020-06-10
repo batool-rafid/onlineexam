@@ -1,6 +1,17 @@
 
 @extends( (Auth::user()->role->name == 'Student' ) ? 'layouts.student':'layouts.lecturer')
-
+<?php 
+ function status($exam){
+if(strtotime($exam->datetime) <= time() && (strtotime($exam->datetime) + $exam->duration * 60) > time()){
+     return "In-progress";
+}
+elseif((strtotime($exam->datetime) + $exam->duration * 60) > time()){
+    return "Waiting";
+}else{
+    return "Finished";
+}
+}
+?>
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -29,7 +40,8 @@
                         @if(auth::user()->role->name == 'Student')
                         <th>Score</th>
                         @endif
-                        <th scope="col">Created At</th>  
+                        <th scope="col">Date</th>  
+                        <th scope="col">Duration(mins)</th>  
                         <th scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -47,9 +59,11 @@
                         
                         @endif
                         <td>{{$exam->questionsnum}}</td>
-                        <td>{{$exam->status}}</td>
+                        <td>{{status($exam)}}</td>
                         @if(auth::user()->role->name == 'Student')
-                        <?php $score =auth::user()->examScore($exam->id); ?>
+                        <?php $score =auth::user()->examScore($exam->id);
+                        $sub =auth::user()->examSub($exam->id);
+                        ?>
                         <td>
                         {{$score}}
                 
@@ -60,15 +74,16 @@
 
 
                         @endif
-                        <td>{{$exam->created_at}}</td>
+                        <td>{{$exam->datetime}}</td>
+                        <td>{{$exam->duration}}</td>
                         <td>
                         <div style="width: 250px;">
-                        @if(auth::user()->role->name == 'Student' && $exam->status == 'Waiting')
-                        <a href="{{route('exam.student-exam.create',$exam)}}" class="btn btn-primary" style="margin-left: 20px">Start</a>
+                        @if(auth::user()->role->name == 'Student' && status($exam) =="In-progress" && $sub != true )
+                        <a href="{{route('exam.student-exam.create',$exam)}}" class="btn btn-primary" style="margin-left: 20px">Enrol</a>
                         @endif
                         @if(auth::user()->role->name == 'Lecturer')
                         <a href="{{route('question.showquestions',$exam)}}" class="btn btn-primary" style="margin-left: 20px">View</a>
-                        @if($exam->status == 'Waiting')
+                        @if(status($exam) =="Waiting")
                         <a href="{{route('exam.edit',$exam)}}" class="btn btn-success" style="margin-left: 20px; margin-right: 0px">Edit</a>
                         <div class="float-right">
                         <form action="{{route('exam.destroy',$exam)}}" method="POST">

@@ -14,12 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 //TODO make a midlleware to the routes acording to roles
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.welcome');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes(['verify' => false]);
 Route::middleware(['auth'])->group(function () {
     
     Route::resource('/exam','ExamController');

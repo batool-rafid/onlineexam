@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Exam extends Model
 {
     protected $fillable = [
-        'name', 'discription', 'material','stage','user_id','questionsnum'
+        'name', 'discription', 'material','stage','user_id','questionsnum','datetime','duration'
     ];
     
     public function lecturer(){
@@ -19,4 +19,5 @@ class Exam extends Model
    public function students(){
        return $this->belongsToMany('App\User', 'student_exams')->withPivot('score');
    }
+   
 }

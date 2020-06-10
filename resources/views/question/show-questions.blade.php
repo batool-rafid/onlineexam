@@ -1,16 +1,28 @@
 
 @extends( (Auth::user()->role->name == 'Student' ) ? 'layouts.student':'layouts.lecturer')
-
+<?php 
+ function status($exam){
+if(strtotime($exam->datetime) <= time() && (strtotime($exam->datetime) + $exam->duration * 60) > time()){
+     return "In-progress";
+}
+elseif((strtotime($exam->datetime) + $exam->duration * 60) > time()){
+    return "Waiting";
+}else{
+    return "Finished";
+}
+}
+?>
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">Exam {{$exam->name}} Questions
+                @if(status($exam) == "Waiting")
                 <div class="float-right">
                 <a href="{{route('question.create_question',$exam->id)}}" class="btn btn-outline-primary">Add Questiion</a>
-                
                 </div>
+                @endif
                 </div>
 
                 <div class="card-body">
@@ -46,10 +58,9 @@
                         <td>{{$question->choice_3}}</td>
                         <td>{{$question->choice_4}}</td>
                         <td>{{$question->correct}}</td>
-                        <td style="width: 250px;">
+                        <td style="width: 190px;">
                         @if(auth::user()->role->name == 'Lecturer')
-                        <a href="{{route('question.show',$question)}}" class="btn btn-primary" style="margin-left: 20px">View</a>
-                        @if($exam->status == 'Waiting')
+                        @if(status($exam) == "Waiting")
                         <a href="{{route('question.edit',$question)}}" class="btn btn-success" style="margin-left: 20px; margin-right: 0px">Edit</a>
                         <div class="float-right">
                         <form action="{{route('question.destroy',$question)}}" method="POST">

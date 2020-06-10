@@ -47,7 +47,8 @@ class StudentExamController extends Controller
         $stexam = StudentExam::create([
             'user_id'=>Auth::user()->id,
             'exam_id'=>$exam->id ,
-            'score'=> 0 
+            'score'=> 0 ,
+            'submitted' => true
         ]);
         $questions = $exam->questions;
         $score = 0 ;

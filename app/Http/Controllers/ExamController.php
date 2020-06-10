@@ -58,6 +58,8 @@ class ExamController extends Controller
             'discription' => ['string' ],
             'material' => ['string' , 'max:191' , 'required'],
             'questionsnum' => ['integer' , 'required'],
+            'duration' => ['required','integer'],
+            'datetime' => ['required']
         ]);
 
         $exam = Exam::create([
@@ -67,6 +69,8 @@ class ExamController extends Controller
             'stage' => $data['stage'],
             'material' => $data['material'],
             'questionsnum' => $data['questionsnum'],
+            'duration' => $data['duration'],
+            'datetime' =>$data['datetime']
 
         ]);
             

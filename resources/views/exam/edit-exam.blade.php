@@ -78,13 +78,29 @@
                             </div>
                         </div>
 
+                       
                         <div class="form-group row">
-                            <label for="questionsnum" class="col-md-4 col-form-label text-md-right">{{ __('questionsnum') }}</label>
+                            <label for="duration" class="col-md-4 col-form-label text-md-right">{{ __('Duration in minuts') }}</label>
 
                             <div class="col-md-6">
-                                <input id="questionsnum" name="questionsnum" type="text" class="form-control @error('questionsnum') is-invalid @enderror" value="{{$exam->questionsnum }}" required autocomplete="questionsnum" autofocus>
+                                <input id="duration" name="duration" type="number" class="form-control @error('duration') is-invalid @enderror" value="{{$exam->duration }}" required autocomplete="duration" autofocus>
 
-                                @error('questionsnum')
+                                @error('duration')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        
+                        <div class="form-group row">
+                            <label for="datetime" class="col-md-4 col-form-label text-md-right">{{ __('Date and Time') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="datetime" name="datetime" type="datetime-local" class="form-control @error('datetime') is-invalid @enderror" value=<?php echo date('Y-m-d\TH:i:s', strtotime($exam->datetime)); ?> required autocomplete="datetime" autofocus>
+
+                                @error('datetime')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

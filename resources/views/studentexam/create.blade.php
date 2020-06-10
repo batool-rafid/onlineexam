@@ -1,5 +1,5 @@
 @extends('layouts.student')
-<?php $t = time(); ?>
+<?php $t = strtotime($exam->datetime) + $exam->duration * 60 ; ?>
 @section('js')
 <script type="text/javascript">
 var TimeLimit ;
@@ -8,6 +8,7 @@ function cancel_start() {
   var x = document.getElementById("submit");
   x.style.display = "none" 
   alert("Sorry your time has finished!");  
+  
   
 }
 window.onload = function() {
@@ -26,7 +27,7 @@ else
 }
 ?>
 
-TimeLimit = new Date('<?php echo date('r', $t + 5) ?>');
+TimeLimit = new Date('<?php echo date('r', $t ) ?>');
 </script>
 <script type="text/javascript">
 var x = 1 ;  var f = 1 ;
@@ -39,17 +40,18 @@ function countdownto() {
   var mins = Math.floor(date/60);
   date = date - (mins*60);
   var secs = date;
-  if (hours<10) hours = hours;
-  if (mins<10) mins = mins;
-  if (secs<10) secs = secs;
+ 
 
 if( secs <= 0 && mins <= 0 && hours <= 0 || hours < 0) {
       f = 0;
       cancel_start();  
       div.innerHTML = '00'+':'+'00'+':'+'00' ;    
 }else{
-
-    div.innerHTML = '0'+hours+':'+'0'+mins+':'+'0'+secs ;
+    
+    if (hours<10) hours ='0'+hours;
+  if (mins<10) mins = '0'+mins;
+  if (secs<10) secs = '0'+mins;
+    div.innerHTML = hours+':'+mins+':'+secs ;
 }
 
 if(x){
@@ -61,10 +63,7 @@ if(Boolean(f))
   }
 
 </script>
-
-
 @endsection
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
